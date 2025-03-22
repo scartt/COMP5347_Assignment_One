@@ -1,5 +1,6 @@
 // Global variable to store book data
 let bookList = [];
+let currentFilteredBooks = bookList; // 保存当前过滤后的书籍列表
 
 // Load book data from JSON file
 async function loadBookData() {
@@ -72,20 +73,30 @@ function loadCategories() {
     `;
 }
 
-// Search functionality
+// Search functionality - only highlights matches
 function searchBooks() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-
     const rows = document.querySelectorAll('#searchResults tbody tr');
+    let hasMatches = false;
+
     rows.forEach(row => {
         const titleCell = row.querySelector('.book-title');
         const title = titleCell.textContent.toLowerCase();
 
+        // Remove existing highlight
         row.classList.remove('highlight-match');
-        if (searchTerm && title.includes(searchTerm)) {
+
+        // Add highlight if match found
+        if (title.includes(searchTerm) && searchTerm !== '') {
             row.classList.add('highlight-match');
+            hasMatches = true;
         }
     });
+
+    // Show alert if no matches found
+    if (!hasMatches && searchTerm !== '') {
+        alert('No books found matching your search term.');
+    }
 }
 
 // Shopping cart function
@@ -145,31 +156,46 @@ function resetCart() {
     }
 }
 
-// Filter by category
+// Filter functionality - actually filters the list
 function filterBooks() {
     const selectedCategory = document.getElementById('categorySelect').value;
 
     if (!selectedCategory) {
-        displayBooks(bookList);
+        currentFilteredBooks = bookList;
     } else {
-        const filteredBooks = bookList.filter(book => book.category === selectedCategory);
-        displayBooks(filteredBooks);
+        currentFilteredBooks = bookList.filter(book =>
+            book.category === selectedCategory
+        );
+
+        if (currentFilteredBooks.length === 0) {
+            alert('No books found in this category.');
+            currentFilteredBooks = bookList;
+            document.getElementById('categorySelect').value = '';
+        }
     }
+
+    displayBooks(currentFilteredBooks);
+
+    // Reapply search highlighting after filtering
+    searchBooks();
 }
 
-// Reset filter
-function resetFilter() {
-    document.getElementById('categorySelect').value = '';
-    displayBooks(bookList);
-}
-
-// Reset search
+// Reset search - only removes highlighting
 function resetSearch() {
     document.getElementById('searchInput').value = '';
     const rows = document.querySelectorAll('#searchResults tbody tr');
     rows.forEach(row => {
         row.classList.remove('highlight-match');
     });
+}
+
+// Reset filter - resets to full list
+function resetFilter() {
+    document.getElementById('categorySelect').value = '';
+    currentFilteredBooks = bookList;
+    displayBooks(bookList);
+    // Reapply search highlighting
+    searchBooks();
 }
 
 // Toggle dark mode
@@ -209,4 +235,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('darkModeToggle').addEventListener('change', toggleDarkMode);
     initDarkMode();
+
+    // Add input event listener for real-time search
+    document.getElementById('searchInput').addEventListener('input', searchBooks);
 });
+
+// Add CSS for highlight
+const style = document.createElement('style');
+style.textContent = `
+    .highlight-match {
+        background-color: #fff3cd !important;  // 浅黄色高亮
+    }
+`;
+document.head.appendChild(style);
