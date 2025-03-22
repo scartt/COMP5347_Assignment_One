@@ -1,6 +1,7 @@
 // Global variable to store book data
 let bookList = [];
 let currentFilteredBooks = bookList; // 保存当前过滤后的书籍列表
+let currentSearchTerm = ''; // 保存当前搜索词
 
 // Load book data from JSON file
 async function loadBookData() {
@@ -73,29 +74,35 @@ function loadCategories() {
     `;
 }
 
-// Search functionality - only highlights matches
-function searchBooks() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+// Search functionality
+function searchBooks(isButtonClick = false) {
+    if (!isButtonClick) return; // 只在点击按钮时执行
+
+    currentSearchTerm = document.getElementById('searchInput').value.toLowerCase();
+    highlightMatches();
+}
+
+// Highlight matching function
+function highlightMatches() {
     const rows = document.querySelectorAll('#searchResults tbody tr');
     let hasMatches = false;
 
-    rows.forEach(row => {
-        const titleCell = row.querySelector('.book-title');
-        const title = titleCell.textContent.toLowerCase();
+    if (currentSearchTerm !== '') {
+        rows.forEach(row => {
+            const titleCell = row.querySelector('.book-title');
+            const title = titleCell.textContent.toLowerCase();
 
-        // Remove existing highlight
-        row.classList.remove('highlight-match');
+            row.classList.remove('highlight-match');
 
-        // Add highlight if match found
-        if (title.includes(searchTerm) && searchTerm !== '') {
-            row.classList.add('highlight-match');
-            hasMatches = true;
+            if (title.includes(currentSearchTerm)) {
+                row.classList.add('highlight-match');
+                hasMatches = true;
+            }
+        });
+
+        if (!hasMatches) {
+            alert('No books found matching your search term.');
         }
-    });
-
-    // Show alert if no matches found
-    if (!hasMatches && searchTerm !== '') {
-        alert('No books found matching your search term.');
     }
 }
 
@@ -156,7 +163,7 @@ function resetCart() {
     }
 }
 
-// Filter functionality - actually filters the list
+// Filter functionality
 function filterBooks() {
     const selectedCategory = document.getElementById('categorySelect').value;
 
@@ -175,27 +182,27 @@ function filterBooks() {
     }
 
     displayBooks(currentFilteredBooks);
-
-    // Reapply search highlighting after filtering
-    searchBooks();
+    // 重新应用当前的搜索高亮
+    highlightMatches();
 }
 
-// Reset search - only removes highlighting
+// Reset search
 function resetSearch() {
     document.getElementById('searchInput').value = '';
+    currentSearchTerm = '';
     const rows = document.querySelectorAll('#searchResults tbody tr');
     rows.forEach(row => {
         row.classList.remove('highlight-match');
     });
 }
 
-// Reset filter - resets to full list
+// Reset filter
 function resetFilter() {
     document.getElementById('categorySelect').value = '';
     currentFilteredBooks = bookList;
     displayBooks(bookList);
-    // Reapply search highlighting
-    searchBooks();
+    // 重新应用当前的搜索高亮
+    highlightMatches();
 }
 
 // Toggle dark mode
@@ -219,7 +226,9 @@ document.addEventListener('DOMContentLoaded', () => {
     loadBookData();
 
     // Add event listeners
-    document.getElementById('searchButton').addEventListener('click', searchBooks);
+    document.getElementById('searchButton').addEventListener('click', () => {
+        searchBooks(true);
+    });
     document.getElementById('resetSearchBtn').addEventListener('click', resetSearch);
     document.getElementById('searchInput').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -236,8 +245,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('darkModeToggle').addEventListener('change', toggleDarkMode);
     initDarkMode();
 
-    // Add input event listener for real-time search
-    document.getElementById('searchInput').addEventListener('input', searchBooks);
+    // Remove real-time search event listener
+    // document.getElementById('searchInput').removeEventListener('input', searchBooks);
 });
 
 // Add CSS for highlight
