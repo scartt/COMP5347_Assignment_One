@@ -1,6 +1,21 @@
 // Global variable to store book data
 let bookList = [];
 
+// Load book data from JSON file
+async function loadBookData() {
+    try {
+        const response = await fetch('./data.json');
+        if (!response.ok) {
+            throw new Error('Failed to load book data');
+        }
+        bookList = await response.json();
+        displayBooks(bookList);
+        loadCategories();
+    } catch (error) {
+        console.error('Error loading book data:', error);
+    }
+}
+
 // Function to generate HTML for rating stars
 function generateRatingStars(rating) {
     const fullStar = '<img src="images/star-16.ico" alt="★">';
@@ -127,21 +142,6 @@ function resetCart() {
         checkboxes.forEach(checkbox => {
             checkbox.checked = false;
         });
-    }
-}
-
-// Load book data from JSON file
-async function loadBookData() {
-    try {
-        const response = await fetch('./data.json');
-        if (!response.ok) {
-            throw new Error('Failed to load book data');
-        }
-        bookList = await response.json();
-        displayBooks(bookList);
-        loadCategories();
-    } catch (error) {
-        console.error('Error loading book data:', error);
     }
 }
 
