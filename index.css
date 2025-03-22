@@ -1,19 +1,4 @@
-﻿/* general text formatting */
-
-h1,
-h2,
-h3,
-nav,
-footer {
-   font-family: Georgia, Cambria, "Times New Roman", serif;
-}
-
-body {
-   font-family: "Lucida Sans", Verdana, Arial, sans-serif;
-   font-size: 80%;
-}
-
-div#searchBox,
+﻿div#searchBox,
 div#listBox {
    margin: 0.25em auto;
    background-color: #EBF4FB;
@@ -94,7 +79,7 @@ caption {
 
 .book-select {
    margin: 0;
-   /* 只移除默认边距 */
+   /* remove default margin */
 }
 
 .book-info {
@@ -190,39 +175,36 @@ button {
 
 .rating-column {
    white-space: nowrap;
-   /* 防止星星换行 */
+   /* prevent star from changing line */
    width: 100px;
-   /* 设置固定宽度 */
+   /* set fixed width */
 }
 
-/* 按钮悬停效果 */
+/* button hover effect */
 button:hover {
    border-color: #999;
-   /* 边框颜色变深 */
+   /* color change */
    background-color: #e9e9e9;
-   /* 背景色变深 */
+   /* color change */
 }
 
-/* 按钮按下效果 */
+/* Active Effect */
 button:active {
    border-color: #666;
-   /* 边框颜色更深 */
+   /* color change */
    background-color: #ddd;
-   /* 背景色更深 */
+   /* color change */
 }
 
-/* 复选框悬停效果 */
+/* Hover Effect */
 .book-select:hover {
    cursor: pointer;
-   /* 鼠标变为手型 */
+   /* handle hover */
 }
 
-/* 搜索匹配行的高亮效果 */
+/* Search Highlight */
 .highlight-match {
    background-color: #fff3cd;
-   /* 使用温和的黄色作为高亮色 */
-   /* transition: background-color 0.3s; */
-   /* 添加平滑过渡效果 */
 }
 
 .modal-content {
@@ -265,7 +247,6 @@ button:active {
    height: 16px;
    vertical-align: middle;
    margin-right: 2px;
-   /* 图标和数字之间的间距 */
 }
 
 .cart-count {
