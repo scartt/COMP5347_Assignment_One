@@ -1,28 +1,18 @@
 // Global variable to store book data
 let bookList = [];
-let currentFilteredBooks = bookList; // 保存当前过滤后的书籍列表
-let currentSearchTerm = ''; // 保存当前搜索词
+let currentFilteredBooks = bookList; // Keep track of the current filtered books
+let currentSearchTerm = ''; // Keep track of the current search term
 
 // Load book data from JSON file
 async function loadBookData() {
     try {
         const response = await fetch('./data.json');
-        if (!response.ok) {
-            throw new Error('Failed to load book data');
-        }
         bookList = await response.json();
         displayBooks(bookList);
         loadCategories();
     } catch (error) {
         console.error('Error loading book data:', error);
     }
-}
-
-// Function to generate HTML for rating stars
-function generateRatingStars(rating) {
-    const fullStar = '<img src="images/star-16.ico" alt="★">';
-    const emptyStar = '<img src="images/outline-star-16.ico" alt="☆">';
-    return fullStar.repeat(rating) + emptyStar.repeat(5 - rating);
 }
 
 // Function to Display book list
@@ -58,6 +48,13 @@ function displayBooks(books) {
         const checkbox = row.querySelector('.book-select');
         checkbox.addEventListener('click', () => handleCheckboxClick(checkbox));
     });
+}
+
+// Function to generate HTML for rating stars
+function generateRatingStars(rating) {
+    const fullStar = '<img src="images/star-16.ico" alt="★">';
+    const emptyStar = '<img src="images/outline-star-16.ico" alt="☆">';
+    return fullStar.repeat(rating) + emptyStar.repeat(5 - rating);
 }
 
 // Load categories into dropdown
