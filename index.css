@@ -255,7 +255,6 @@ button:active {
 /* Basic Layout */
 body {
    background-color: white;
-   /* White background */
 }
 
 .left-section,
@@ -263,7 +262,6 @@ body {
    display: inline-block;
    padding: 5px;
    background-color: #EBF4FB;
-   /* Light blue background */
 }
 
 .left-section {
@@ -274,7 +272,7 @@ body {
    float: right;
 }
 
-/* Table Container */
+/* Table Styles */
 #searchResults {
    clear: both;
    width: 100%;
@@ -283,20 +281,15 @@ body {
    margin-top: 10px;
 }
 
-/* Table Header */
 thead tr {
    background-color: #B8D6FB;
-   /* Light blue header */
 }
 
-/* Table Rows - Single Color */
 tbody tr {
    background-color: #EBF4FB !important;
-   /* Force single color for all rows */
    border-bottom: 1px solid #99BCE8;
 }
 
-/* Table Cells */
 th,
 td {
    padding: 8px;
@@ -304,12 +297,7 @@ td {
    border: none;
 }
 
-/* Remove last row border */
-tr:last-child {
-   border-bottom: none;
-}
-
-/* Input and Button Styles */
+/* Input Styles */
 input,
 select,
 button {
@@ -318,10 +306,9 @@ button {
    border: 1px solid #99BCE8;
    border-radius: 2px;
    background-color: white;
-   /* White background for inputs */
 }
 
-/* Cart Icon and Count */
+/* Cart Icon */
 .cart-icon {
    width: 16px;
    height: 16px;
