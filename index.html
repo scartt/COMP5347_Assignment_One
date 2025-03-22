@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+   <meta charset="utf-8">
+   <title>Bookstore</title>
+   <link rel="stylesheet" href="index.css" />
+   <script type="text/javascript" src="index.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+   <!-- Prevent favicon.ico 404 error -->
+   <link rel="icon" href="data:,">
+</head>
+
+<body>
+   <div id="searchBox">
+      <!-- Search Part -->
+      <div class="left-section">
+         <input type="text" id="searchInput">
+         <button type="button" id="searchButton">Search</button>
+         <button type="button" id="resetSearchBtn">Reset Search</button>
+         <select id="categorySelect">
+            <option value="">All Categories</option>
+         </select>
+         <button type="button" id="filterBtn">Filter</button>
+         <button type="button" id="resetFilterBtn">Reset Filter</button>
+         <label class="mode-toggle">
+            <input type="checkbox" id="darkModeToggle">
+            Dark Mode
+         </label>
+      </div>
+
+      <!-- Cart Part -->
+      <div class="right-section">
+         <button type="button" id="addToCartBtn">Add to Cart</button>
+         <button type="button" id="resetCartBtn">Reset Cart</button>
+         <img src="images/shopping_cart.png" alt="Cart" class="cart-icon">
+         <span class="cart-count">(0)</span>
+      </div>
+   </div>
+
+   <!-- Book List Part -->
+   <div id="listBox">
+      <table id="searchResults">
+         <thead>
+            <tr>
+               <th>Book Info</th>
+               <th>Rating</th>
+               <th>Authors</th>
+               <th>Year</th>
+               <th>Price</th>
+               <th>Publisher</th>
+               <th>Category</th>
+            </tr>
+         </thead>
+         <tbody>
+            <!-- Will be added by JavaScript -->
+         </tbody>
+      </table>
+   </div>
+</body>
+
+</html>
