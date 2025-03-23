@@ -286,7 +286,7 @@ thead tr {
 }
 
 tbody tr {
-   background-color: #EBF4FB !important;
+   background-color: #EBF4FB;
    border-bottom: 1px solid #99BCE8;
 }
 
